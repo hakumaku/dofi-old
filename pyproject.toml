@@ -1,0 +1,95 @@
+[tool.poetry]
+name = "dofi"
+version = "0.1.0"
+description = ""
+authors = ["haku <gentlebuuny@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+typer = {extras = ["all"], version = "^0.7.0"}
+pydantic = {extras = ["dotenv"], version = "^1.10.7"}
+aiohttp = "^3.8.4"
+typing-extensions = "^4.5.0"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.2.0"
+black = "^23.3.0"
+isort = "^5.12.0"
+pytest = "^7.3.1"
+pytest-sugar = "^0.9.7"
+pytest-html = "^3.2.0"
+pytest-mock = "^3.10.0"
+coverage = "^7.2.4"
+types-mock = "^5.0.0.6"
+flake8 = "^6.0.0"
+mock = "^5.0.2"
+pytest-asyncio = "^0.21.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 119
+extend_exclude = ""
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 119
+include_trailing_comma = true
+extend_skip = []
+
+[tool.pytest.ini_options]
+pythonpath = [ ".", "dofi" ]
+testpaths = [
+    "tests",
+]
+python_files = [
+    "tests.py",
+    "test_*.py",
+    "*_tests.py"
+]
+mock_use_standalone_module = true
+norecursedirs = []
+addopts = []
+
+[tool.coverage.run]
+branch = true
+source = ["dofi"]
+omit = [
+    "*/tests/*",
+    "*/__main__.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "def __str__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "if typing.TYPE_CHECKING:",
+    "@overload"
+]
+
+[tool.coverage.xml]
+output = "public/coverage/coverage.xml"
+
+[tool.coverage.html]
+directory = "public/coverage"
+
+[tool.mypy]
+plugins = []
+check_untyped_defs = true
+warn_redundant_casts = true
+warn_unreachable = true
+warn_return_any = true
+warn_unused_configs = true
+exclude = [
+    ".venv",
+    "venv",
+]
