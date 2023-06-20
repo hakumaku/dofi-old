@@ -8,23 +8,30 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 typer = {extras = ["all"], version = "^0.9.0"}
-pydantic = {extras = ["dotenv"], version = "^2.1.1"}
+pydantic = {extras = ["dotenv"], version = "^2.3.0"}
 aiohttp = "^3.8.5"
-typing-extensions = "^4.7.1"
+pydantic-settings = "^2.0.3"
+fastapi = {extras = ["all"], version = "^0.102"}
 
 [tool.poetry.group.dev.dependencies]
-mypy = "^1.2.0"
+# formatter
 black = "^23.3.0"
 isort = "^5.12.0"
+# test
 pytest = "^7.3.1"
+mock = "^5.0.2"
 pytest-sugar = "^0.9.7"
 pytest-html = "^3.2.0"
 pytest-mock = "^3.10.0"
-coverage = "^7.2.4"
-types-mock = "^5.0.0.6"
-flake8 = "^6.0.0"
-mock = "^5.0.2"
 pytest-asyncio = "^0.21.0"
+# coverage
+coverage = { extras = ["toml"], version = "*" }
+# mypy
+mypy = "^1.2.0"
+types-mock = "^5.0.0.6"
+typing-extensions = "^4.7.1"
+# flake
+flake8 = "^6.0.0"
 
 [build-system]
 requires = ["poetry-core"]

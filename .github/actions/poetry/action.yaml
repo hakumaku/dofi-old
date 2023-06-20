@@ -1,0 +1,27 @@
+# https://stackoverflow.com/questions/72142402/reduce-duplications-in-github-actions
+name: Install Python and Poetry
+
+inputs:
+    python-version:
+        description: Python version
+        required: false
+        default: 3.11
+
+runs:
+    using: composite
+    steps:
+        -   name: Set up Python ${{ inputs.python-version }}
+            uses: actions/setup-python@v4
+            with:
+                python-version: ${{ inputs.python-version }}
+                cache: 'pip'
+        -   name: Install poetry
+            uses: snok/install-poetry@v1
+            with:
+                version: latest
+                virtualenvs-create: true
+                virtualenvs-in-project: true
+                installer-parallel: true
+        -   name: Install dependencies
+            shell: bash
+            run: make install-dev
