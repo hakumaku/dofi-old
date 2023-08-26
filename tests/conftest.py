@@ -2,8 +2,10 @@ from pathlib import Path
 from typing import Literal, cast, overload
 
 import pytest
-from aiohttp import ClientSession
 from pytest_mock import MockerFixture
+
+from aiohttp import ClientSession
+
 from utils.network import MockRequest
 
 
@@ -39,6 +41,6 @@ class Helper:
         self.mocker.patch.object(ClientSession, method, fake_request)
 
 
-@pytest.fixture
+@pytest.fixture()
 def helper(mocker: MockerFixture):
     return Helper(mocker=mocker)

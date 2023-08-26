@@ -1,12 +1,13 @@
 import json
 
 import pytest
+
 from starlette import status
 
 from dofi.utils.network import HttpClient
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_http_client_get(helper):
     helper.mock_http_request("get", status_code=status.HTTP_200_OK, data={"foo": 1, "bar": "Hello, world!"})
 
@@ -19,7 +20,7 @@ async def test_http_client_get(helper):
     assert data["bar"] == "Hello, world!"
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_http_client_get_download(helper, tmp_path):
     helper.mock_http_request("get", status_code=status.HTTP_200_OK, filename="test.zip", data={"foo": 1})
 
@@ -37,7 +38,7 @@ async def test_http_client_get_download(helper, tmp_path):
     assert data["foo"] == 1
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_http_client_post(helper):
     helper.mock_http_request("post", status_code=status.HTTP_201_CREATED, data={"foo": 1, "bar": "Hello, world!"})
 

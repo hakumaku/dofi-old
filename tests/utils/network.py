@@ -4,8 +4,9 @@ from contextlib import asynccontextmanager
 from http.cookies import SimpleCookie
 from unittest.mock import Mock
 
-from aiohttp.client_reqrep import ContentDisposition
 from starlette import status
+
+from aiohttp.client_reqrep import ContentDisposition
 
 
 class StreamReaderMock(Mock):
@@ -86,7 +87,7 @@ class MockRequest:
 
     @asynccontextmanager
     async def __call__(self, *args, **kwargs):
-        if isinstance(self.fake_data, dict) or isinstance(self.fake_data, bytes):
+        if isinstance(self.fake_data, bytes | dict):
             yield ResponseMock(self.fake_data, self.status_code, filename=self.filename)
         elif isinstance(self.fake_data, list):
             index = next(self.counter)

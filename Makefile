@@ -8,16 +8,14 @@ install-dev:
 	@poetry install --no-root
 
 format:
-	@poetry run isort .
+	@poetry run ruff check --fix .
 	@poetry run black .
 
 lint:
 	@poetry run \
-		isort --check-only .
-	@poetry run \
 		black --check .
 	@poetry run \
-		flake8 . --config setup.cfg
+		ruff check --show-source .
 	@poetry run \
 		mypy .
 

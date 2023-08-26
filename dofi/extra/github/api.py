@@ -16,7 +16,8 @@ def _select_download_url(info: schemas.GithubReleaseInfo, pattern: str) -> str:
 
     if len(matched_urls) == 1:
         return matched_urls[0]
-    elif len(matched_urls) == 0:
+
+    if len(matched_urls) == 0:
         messages: list[str] = [
             "matching url is not found",
             f"pattern: '{pattern}'",
@@ -48,8 +49,7 @@ class GithubAPI(API):
             url=f"https://api.github.com/repos/{repository.username}/{repository.repo_name}/releases/latest",
             headers=self.headers,
         )
-        release_info = response.parse_contents_as(schemas.GithubReleaseInfo)
-        return release_info
+        return response.parse_contents_as(schemas.GithubReleaseInfo)
 
     async def download(
         self,
@@ -63,7 +63,6 @@ class GithubAPI(API):
 
         dest = dest if dest is not None else Path.home() / "Downloads"
 
-        response = await client.get(url=download_url, headers=self.headers, download=dest)
+        return await client.get(url=download_url, headers=self.headers, download=dest)
         # TODO: compare local version with remote version
         # TODO: extract zip files
-        return response
