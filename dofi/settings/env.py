@@ -7,7 +7,10 @@ ROOT_DIR = Path(__file__).resolve().parents[2]
 
 
 class EnvSettings(BaseSettings):
+    # API tokens
     GITHUB_PAT: str | None = None
+    # Database
+    SQLITE_DB_PATH: Path
 
     class Config:
         env_file = f"{ROOT_DIR}/.env"

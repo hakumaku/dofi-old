@@ -8,16 +8,13 @@ install-dev:
 	@poetry install --no-root
 
 format:
-	@poetry run ruff check --fix .
 	@poetry run black .
+	@poetry run ruff check --fix .
 
 lint:
-	@poetry run \
-		black --check .
-	@poetry run \
-		ruff check --show-source .
-	@poetry run \
-		mypy .
+	@poetry run black --check .
+	@poetry run ruff check --show-source .
+	@poetry run mypy .
 
 test:
 	@poetry run \

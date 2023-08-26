@@ -125,6 +125,26 @@ files = [
 frozenlist = ">=1.1.0"
 
 [[package]]
+name = "alembic"
+version = "1.11.3"
+description = "A database migration tool for SQLAlchemy."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "alembic-1.11.3-py3-none-any.whl", hash = "sha256:d6c96c2482740592777c400550a523bc7a9aada4e210cae2e733354ddae6f6f8"},
+    {file = "alembic-1.11.3.tar.gz", hash = "sha256:3db4ce81a9072e1b5aa44c2d202add24553182672a12daf21608d6f62a8f9cf9"},
+]
+
+[package.dependencies]
+Mako = "*"
+SQLAlchemy = ">=1.3.0"
+typing-extensions = ">=4"
+
+[package.extras]
+tz = ["python-dateutil"]
+
+[[package]]
 name = "annotated-types"
 version = "0.5.0"
 description = "Reusable constraint types to use with typing.Annotated"
@@ -795,6 +815,26 @@ MarkupSafe = ">=2.0"
 i18n = ["Babel (>=2.7)"]
 
 [[package]]
+name = "mako"
+version = "1.2.4"
+description = "A super-fast templating language that borrows the best ideas from the existing templating languages."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "Mako-1.2.4-py3-none-any.whl", hash = "sha256:c97c79c018b9165ac9922ae4f32da095ffd3c4e6872b45eded42926deea46818"},
+    {file = "Mako-1.2.4.tar.gz", hash = "sha256:d60a3903dc3bb01a18ad6a89cdbe2e4eadc69c0bc8ef1e3773ba53d44c3f7a34"},
+]
+
+[package.dependencies]
+MarkupSafe = ">=0.9.2"
+
+[package.extras]
+babel = ["Babel"]
+lingua = ["lingua"]
+testing = ["pytest"]
+
+[[package]]
 name = "markdown-it-py"
 version = "3.0.0"
 description = "Python port of markdown-it. Markdown parsing, done right!"
@@ -996,7 +1036,7 @@ files = [
 name = "mypy"
 version = "1.5.1"
 description = "Optional static typing for Python"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.8"
 files = [
@@ -1042,7 +1082,7 @@ reports = ["lxml"]
 name = "mypy-extensions"
 version = "1.0.0"
 description = "Type system extensions for programs checked with the mypy type checker."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.5"
 files = [
@@ -1692,6 +1732,7 @@ files = [
 
 [package.dependencies]
 greenlet = {version = "!=0.4.17", markers = "platform_machine == \"aarch64\" or platform_machine == \"ppc64le\" or platform_machine == \"x86_64\" or platform_machine == \"amd64\" or platform_machine == \"AMD64\" or platform_machine == \"win32\" or platform_machine == \"WIN32\""}
+mypy = {version = ">=0.910", optional = true, markers = "extra == \"mypy\""}
 typing-extensions = ">=4.2.0"
 
 [package.extras]
@@ -1717,6 +1758,35 @@ postgresql-psycopg2cffi = ["psycopg2cffi"]
 postgresql-psycopgbinary = ["psycopg[binary] (>=3.0.7)"]
 pymysql = ["pymysql"]
 sqlcipher = ["sqlcipher3-binary"]
+
+[[package]]
+name = "sqlalchemy-utils"
+version = "0.41.1"
+description = "Various utility functions for SQLAlchemy."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "SQLAlchemy-Utils-0.41.1.tar.gz", hash = "sha256:a2181bff01eeb84479e38571d2c0718eb52042f9afd8c194d0d02877e84b7d74"},
+    {file = "SQLAlchemy_Utils-0.41.1-py3-none-any.whl", hash = "sha256:6c96b0768ea3f15c0dc56b363d386138c562752b84f647fb8d31a2223aaab801"},
+]
+
+[package.dependencies]
+SQLAlchemy = ">=1.3"
+
+[package.extras]
+arrow = ["arrow (>=0.3.4)"]
+babel = ["Babel (>=1.3)"]
+color = ["colour (>=0.0.4)"]
+encrypted = ["cryptography (>=0.6)"]
+intervals = ["intervals (>=0.7.1)"]
+password = ["passlib (>=1.6,<2.0)"]
+pendulum = ["pendulum (>=2.0.5)"]
+phone = ["phonenumbers (>=5.9.2)"]
+test = ["Jinja2 (>=2.3)", "Pygments (>=1.2)", "backports.zoneinfo", "docutils (>=0.10)", "flake8 (>=2.4.0)", "flexmock (>=0.9.7)", "isort (>=4.2.2)", "pg8000 (>=1.12.4)", "psycopg (>=3.1.8)", "psycopg2 (>=2.5.1)", "psycopg2cffi (>=2.8.1)", "pymysql", "pyodbc", "pytest (>=2.7.1)", "python-dateutil (>=2.6)", "pytz (>=2014.2)"]
+test-all = ["Babel (>=1.3)", "Jinja2 (>=2.3)", "Pygments (>=1.2)", "arrow (>=0.3.4)", "backports.zoneinfo", "colour (>=0.0.4)", "cryptography (>=0.6)", "docutils (>=0.10)", "flake8 (>=2.4.0)", "flexmock (>=0.9.7)", "furl (>=0.4.1)", "intervals (>=0.7.1)", "isort (>=4.2.2)", "passlib (>=1.6,<2.0)", "pendulum (>=2.0.5)", "pg8000 (>=1.12.4)", "phonenumbers (>=5.9.2)", "psycopg (>=3.1.8)", "psycopg2 (>=2.5.1)", "psycopg2cffi (>=2.8.1)", "pymysql", "pyodbc", "pytest (>=2.7.1)", "python-dateutil", "python-dateutil (>=2.6)", "pytz (>=2014.2)"]
+timezone = ["python-dateutil"]
+url = ["furl (>=0.4.1)"]
 
 [[package]]
 name = "starlette"
@@ -1787,6 +1857,21 @@ files = [
     {file = "types-mock-5.1.0.1.tar.gz", hash = "sha256:f07d59de50ea816ab403ba4e246ff80b009263b377bc3f774dfdebf0b403fb60"},
     {file = "types_mock-5.1.0.1-py3-none-any.whl", hash = "sha256:ce0945bfab57f7e983968602eff44879e2b1ac97e4d26087107011fa527440c9"},
 ]
+
+[[package]]
+name = "types-sqlalchemy-utils"
+version = "1.0.1"
+description = "Type Stubs for sqlalchemy-utils"
+category = "dev"
+optional = false
+python-versions = ">=3.7, <4"
+files = [
+    {file = "types-sqlalchemy-utils-1.0.1.tar.gz", hash = "sha256:37016333faa0abab7d253805ecf9f605c24ea107b32dd3643014efb8e49be76d"},
+    {file = "types_sqlalchemy_utils-1.0.1-py3-none-any.whl", hash = "sha256:95bc90db15ec4af5b13d64f04a7d31a7e851931250419fc7859354644ab3ea98"},
+]
+
+[package.extras]
+dev = ["mypy (==0.971)", "pipenv-setup (==3.2.0)", "sqlalchemy-utils (==0.38.3)", "sqlalchemy2-stubs (==0.0.2a25)", "twine (==4.0.1)"]
 
 [[package]]
 name = "typing-extensions"
@@ -2148,4 +2233,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "7c5484871394de38d45659d96a5d5ca04cf212f9f546dd9b5e495aca3857b5b5"
+content-hash = "7bc241115b939ec2791a7edf6b037d4b04d40bcb194034e86707339c1ae31d68"
