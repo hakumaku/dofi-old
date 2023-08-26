@@ -4,7 +4,8 @@ My over-engineered dotfile manager
 
 ## TODO
 
-- [ ] ruff
+- [x] ruff
+- [ ] github page
 - [ ] rust
 - [ ] htmx
 - [ ] mongodb, sqlite
