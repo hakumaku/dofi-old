@@ -6,8 +6,9 @@ from pathlib import Path
 from types import TracebackType
 from typing import TYPE_CHECKING, Any, AsyncContextManager, Literal, Mapping, Protocol, Type, TypeAlias
 
-from aiohttp import ClientResponse, ClientSession, ClientTimeout
 from pydantic import ValidationError
+
+from aiohttp import ClientResponse, ClientSession, ClientTimeout
 from yarl import URL
 
 if TYPE_CHECKING:
@@ -40,7 +41,7 @@ class HttpResponse:
         try:
             return schemas.model_validate_json(self.contents)
         except ValidationError as e:
-            msg = f"{self.url}[{self.status}]: {self.reason} (body: {str(self.contents)}, schemas: {schemas.__name__})"
+            msg = f"{self.url}[{self.status}]: {self.reason} (body: {self.contents!s}, schemas: {schemas.__name__})"
             logger.error(msg)
             raise e
 
@@ -59,7 +60,8 @@ async def _request(fn: _RequestPartial, *, download: Path | None = None) -> Http
         )
 
     async with fn() as response:
-        assert response.content_disposition and response.content_disposition.filename
+        assert response.content_disposition
+        assert response.content_disposition.filename
 
         output = download / response.content_disposition.filename
         with open(output, "wb") as f:
