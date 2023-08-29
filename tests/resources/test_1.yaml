@@ -1,0 +1,7 @@
+packages:
+    - username: "foo"
+      project: "bar"
+      pattern: ""
+    - username: "bar"
+      project: "spam"
+      pattern: ""
