@@ -3,14 +3,15 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Mapping
 
 from dofi.extra.abc import API
-from dofi.extra.github import schemas
+from dofi.extra.types import Repository, RepositoryReleaseInfo
+
+from . import schemas
 
 if TYPE_CHECKING:
-    from dofi.extra.types import Repository
     from dofi.utils.network import ClientSessionProxy, HttpResponse
 
 
-def _select_download_url(info: schemas.GithubReleaseInfo, pattern: str) -> str:
+def select_download_url(info: schemas.GithubReleaseInfo, pattern: str) -> str:
     download_url: list[str] = [asset.browser_download_url for asset in info.assets]
     matched_urls: list[str] = list(filter(lambda url: re.search(pattern, url) is not None, download_url))
 
@@ -42,27 +43,35 @@ class GithubAPI(API):
                 "X-GitHub-Api-Version": "2022-11-28",
             }
 
-    async def get_release_info(
-        self, client: "ClientSessionProxy", repository: "Repository"
-    ) -> schemas.GithubReleaseInfo:
+    async def fetch_release_info(
+        self, client: "ClientSessionProxy", repository: "Repository", pattern: str
+    ) -> RepositoryReleaseInfo:
         response = await client.get(
-            url=f"https://api.github.com/repos/{repository.username}/{repository.repo_name}/releases/latest",
+            url=f"https://api.github.com/repos/{repository.username}/{repository.project}/releases/latest",
             headers=self.headers,
         )
-        return response.parse_contents_as(schemas.GithubReleaseInfo)
+        info = response.parse_contents_as(schemas.GithubReleaseInfo)
+        download_link = select_download_url(info, pattern=pattern)
+
+        return RepositoryReleaseInfo(
+            username=repository.username,
+            project=repository.project,
+            version=info.tag_name,
+            download_link=download_link,
+        )
 
     async def download(
         self,
         client: "ClientSessionProxy",
         repository: "Repository",
+        pattern: str,
         *,
         dest: Path | None = None,
     ) -> "HttpResponse":
-        release_info = await self.get_release_info(client, repository)
-        download_url = _select_download_url(release_info, repository.download_link)
-
+        info = await self.fetch_release_info(client, repository, pattern)
         dest = dest if dest is not None else Path.home() / "Downloads"
 
-        return await client.get(url=download_url, headers=self.headers, download=dest)
+        return await client.get(url=info.download_link, headers=self.headers, download=dest)
+        # TODO: actually download method is not mandatory?
         # TODO: compare local version with remote version
         # TODO: extract zip files

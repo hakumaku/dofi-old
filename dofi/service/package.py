@@ -1,13 +1,17 @@
 from datetime import datetime
 
-from sqlalchemy import insert, select, update
+from sqlalchemy import select, update
+from sqlalchemy.dialects.sqlite import insert
 
 from dofi.database import begin_session
 from dofi.models import models
 
 
 class PackageService:
-    def create(self, package_name: str, remote_version: str) -> models.Package:
+    def upsert(self, package_name: str, remote_version: str) -> models.Package:
+        """
+        Insert a new row, or update an existing one if conflicts.
+        """
         stmt = (
             insert(models.Package)
             .values(
@@ -15,6 +19,7 @@ class PackageService:
                 local_version="",
                 remote_version=remote_version,
             )
+            .on_conflict_do_update(index_elements=["name"], set_=dict(remote_version=remote_version))
             .returning(models.Package)
         )
 

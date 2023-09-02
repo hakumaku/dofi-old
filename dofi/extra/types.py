@@ -1,7 +1,15 @@
-from typing import NamedTuple
+from pydantic import BaseModel
 
 
-class Repository(NamedTuple):
+class Repository(BaseModel):
     username: str
-    repo_name: str
+    project: str
+
+
+class RepositoryReleaseInfo(Repository):
+    version: str
     download_link: str
+
+
+class Package(Repository):
+    pattern: str
