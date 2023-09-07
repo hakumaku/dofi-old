@@ -10,7 +10,7 @@ python = "^3.11"
 # cli framework
 typer = { extras = ["all"], version = "^0.9.0" }
 # web framework
-fastapi = { extras = ["all"], version = "^0.102" }
+fastapi = { extras = ["all"], version = "^0.103.1" }
 # database
 sqlalchemy = {extras = ["mypy"], version = "^2.0.20"}
 sqlalchemy-utils = "^0.41.1"
@@ -94,9 +94,49 @@ extend_exclude = ""
 
 [tool.ruff]
 src = ["dofi", "tests"]
-# Enable pycodestyle (`E`) and Pyflakes (`F`) codes by default.
-select = ["E", "F", "PL", "RUF", "W", "Q", "RET", "SLF", "SIM", "TID", "ERA", "PT", "I"]
-ignore = ["PLR0913"]
+select = [
+    # isort
+    "I",
+    # pycodestyle
+    "E",
+    "W",
+    # pyflakes
+    "F",
+    # ruff
+    "RUF",
+    # pylint
+    "PL",
+    # flake8-pytest-style
+    "PT",
+    # flake8-quote
+    "Q",
+    # flake8-return
+    "RET",
+    # flake8-self
+    "SLF",
+    # flake8-simplify
+    "SIM",
+    # flake8-tidy-imports
+    "TID",
+    # flake8-type-checking
+    "TCH",
+    # eradicate
+    "ERA",
+]
+ignore = [
+    # too-many-return-statements
+    "PLR0911",
+    # too-many-branches
+    "PLR0912",
+    # too-many-arguments
+    "PLR0913",
+    # too-many-statements
+    "PLR0915",
+    # magic-value-comparison, (will be set in the future)
+    "PLR2004",
+    # false positive on some pydantic fields, see https://github.com/astral-sh/ruff/issues/5243
+    "RUF012",
+]
 # Exclude a variety of commonly ignored directories.
 exclude = [
     ".bzr",
@@ -125,7 +165,6 @@ exclude = [
 line-length = 119
 # Allow unused variables when underscore-prefixed.
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
-# Assume Python 3.8
 target-version = "py311"
 
 [tool.ruff.isort]

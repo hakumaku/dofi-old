@@ -1,5 +1,6 @@
 .PHONY: install install-dev \
-	format lint test coverage
+	format lint test coverage \
+	migrate makemigrations
 
 install:
 	@poetry install --no-root --without dev
@@ -25,3 +26,10 @@ test:
 coverage:
 	@poetry run coverage run -m pytest
 	@poetry run coverage report
+
+makemigrations:
+	@read -p "new commit message: " message; \
+	poetry run python -m alembic revision --autogenerate -m "$$message"
+
+migrate:
+	@poetry run python -m alembic upgrade head
