@@ -48,23 +48,34 @@ class Database(ABC):
 
     @property
     @abstractmethod
+    def url(self) -> URL:
+        """
+        Return "sqlalchemy.URL" object.
+        """
+
+    @property
+    @abstractmethod
     def engine(self) -> Engine:
         """
-        Return sqlalchemy.Engine object.
+        Return "sqlalchemy.Engine" object.
         """
 
 
 class SQLite3Database(Database):
     def __init__(self, *, path: str):
-        url = URL.create(
+        self._url = URL.create(
             drivername="sqlite",
             database=path,
         )
         self._engine = create_engine(
-            url,
+            self._url,
             connect_args={},
             json_serializer=json_serializer,
         )
+
+    @property
+    def url(self) -> URL:
+        return self._url
 
     @property
     def engine(self) -> Engine:
@@ -73,7 +84,7 @@ class SQLite3Database(Database):
 
 class PostgresDatabase(Database):
     def __init__(self, *, username: str, password: str, host: str, db_name: str):
-        url = URL.create(
+        self._url = URL.create(
             drivername="postgresql+psycopg2",
             username=username,
             password=password,
@@ -81,13 +92,17 @@ class PostgresDatabase(Database):
             database=db_name,
         )
         self._engine = create_engine(
-            url,
+            self._url,
             connect_args={
                 # Specify timezone explicitly to get consistent values of datetime fields.
                 "options": "-c timezone=utc"
             },
             json_serializer=json_serializer,
         )
+
+    @property
+    def url(self) -> URL:
+        return self._url
 
     @property
     def engine(self) -> Engine:
